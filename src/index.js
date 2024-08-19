@@ -35,10 +35,42 @@ const MORSE_TABLE = {
     '---..':  '8',
     '----.':  '9',
     '-----':  '0',
+    '**********': ' ',
 };
 
 function decode(expr) {
-    // write your solution here
+    let arrMorse = [];
+    for (let i=0; i< expr.length ; i+=10){
+        arrMorse.push(expr.substring(i,i+10));
+    }
+
+    for (let i =0; i< arrMorse.length; i+=1){
+        let charDotDashes = '';
+        
+        for (let j = 0; j < 10 ; j+=2){
+            if (arrMorse[i][j] === '1' && arrMorse[i][j+1] === '0'){
+               charDotDashes = charDotDashes + '.'; 
+            }
+            if (arrMorse[i][j] === '1' && arrMorse[i][j+1] === '1'){
+                charDotDashes = charDotDashes + '-'; 
+             }
+            if (arrMorse[i][j] === '*'){
+                charDotDashes = charDotDashes + '**'; 
+             }
+        }
+
+        arrMorse.splice(i, 1, charDotDashes);
+    }
+    let result='';
+    for(let i =0; i< arrMorse.length;i+=1){
+        for(let key in MORSE_TABLE){
+            if (arrMorse[i] === key){
+                result= result + MORSE_TABLE[key];
+            }
+        }
+    }
+
+    return result;
 }
 
 module.exports = {
